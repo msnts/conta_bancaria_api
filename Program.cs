@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace conta_bancaria_api
+namespace ContaBancaria.API
 {
     public class Program
     {

@@ -2,16 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ContaBancaria.API.Data;
+using ContaBancaria.API.Domain.Repositories;
+using ContaBancaria.API.Domain.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace conta_bancaria_api
+namespace ContaBancaria.API
 {
     public class Startup
     {
@@ -25,7 +29,11 @@ namespace conta_bancaria_api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<DataContext>(opt => opt.UseSqlite("Data Source=ContaBancariaApi.db"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddScoped<IContaCorrenteService, ContaCorrenteService>();
+            services.AddScoped<IContaCorrenteRepository, ContaCorrenteRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
