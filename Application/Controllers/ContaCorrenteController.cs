@@ -29,19 +29,16 @@ namespace ContaBancariaAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ContaCorrente>>> GetContas()
         {
-            return await _context.Contas.ToListAsync();
+            var result = await _contaCorrenteService.ListAsync();
+
+            return Ok(result);
         }
 
         // GET: api/ContaCorrente/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ContaCorrente>> GetContaCorrente(int id)
         {
-            var contaCorrente = await _context.Contas.FindAsync(id);
-
-            if (contaCorrente == null)
-            {
-                return NotFound();
-            }
+            var contaCorrente = await _contaCorrenteService.FindByIdAsync(id);
 
             return contaCorrente;
         }
@@ -55,23 +52,7 @@ namespace ContaBancariaAPI.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(contaCorrente).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ContaCorrenteExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _contaCorrenteService.UpdateAsync(contaCorrente);
 
             return NoContent();
         }
@@ -80,31 +61,16 @@ namespace ContaBancariaAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<ContaCorrente>> PostContaCorrente(ContaCorrente contaCorrente)
         {
-            _context.Contas.Add(contaCorrente);
-            await _context.SaveChangesAsync();
+            await _contaCorrenteService.SaveAsync(contaCorrente);
 
             return CreatedAtAction("GetContaCorrente", new { id = contaCorrente.Id }, contaCorrente);
         }
 
         // DELETE: api/ContaCorrente/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<ContaCorrente>> DeleteContaCorrente(int id)
+        public async Task DeleteContaCorrente(int id)
         {
-            var contaCorrente = await _context.Contas.FindAsync(id);
-            if (contaCorrente == null)
-            {
-                return NotFound();
-            }
-
-            _context.Contas.Remove(contaCorrente);
-            await _context.SaveChangesAsync();
-
-            return contaCorrente;
-        }
-
-        private bool ContaCorrenteExists(int id)
-        {
-            return _context.Contas.Any(e => e.Id == id);
+            await _contaCorrenteService.DeleteAsync(id);
         }
     }
 }

@@ -19,6 +19,7 @@ namespace ContaBancaria.API.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
         }
 

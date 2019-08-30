@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ContaBancaria.API.Data;
 using ContaBancaria.API.Domain.Repositories;
 using ContaBancaria.API.Domain.Services;
+using ContaBancaria.API.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,8 +33,8 @@ namespace ContaBancaria.API
             services.AddDbContext<DataContext>(opt => opt.UseSqlite("Data Source=./../ContaBancariaApi.db"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddScoped<IContaCorrenteService, ContaCorrenteService>();
             services.AddScoped<IContaCorrenteRepository, ContaCorrenteRepository>();
+            services.AddScoped<IContaCorrenteService, ContaCorrenteService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +50,7 @@ namespace ContaBancaria.API
                 app.UseHsts();
             }
 
+            app.UseExceptionMiddleware();
             app.UseHttpsRedirection();
             app.UseMvc();
         }
