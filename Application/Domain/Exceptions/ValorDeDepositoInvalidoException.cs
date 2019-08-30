@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace ContaBancaria.API.Domain.Models
+namespace ContaBancaria.API.Domain.Exceptions
 {
     [Serializable]
     public class ValorDeDepositoInvalidoException : ArgumentException
