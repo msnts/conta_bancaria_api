@@ -7,5 +7,6 @@ namespace ContaBancaria.API.Domain.Services
         private readonly IContaCorrenteRepository _contaCorrenteRepository;
 
         public ContaCorrenteService(IContaCorrenteRepository repository) => _contaCorrenteRepository = repository;
+
     }
 }

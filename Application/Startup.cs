@@ -29,7 +29,7 @@ namespace ContaBancaria.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DataContext>(opt => opt.UseSqlite("Data Source=ContaBancariaApi.db"));
+            services.AddDbContext<DataContext>(opt => opt.UseSqlite("Data Source=./../ContaBancariaApi.db"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddScoped<IContaCorrenteService, ContaCorrenteService>();

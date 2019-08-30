@@ -13,7 +13,7 @@ namespace ContaBancaria.API.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlite("Data Source=ContaBancariaApi.db");
+                optionsBuilder.UseSqlite("Data Source=./../ContaBancariaApi.db");
             }
         }
 
