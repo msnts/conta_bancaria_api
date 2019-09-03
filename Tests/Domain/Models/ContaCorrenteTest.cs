@@ -13,7 +13,7 @@ namespace ContaBancaria.API.Tests.Domain.Models
         {
             var conta = new ContaCorrente(0);
 
-            Assert.Throws<ValorDeDepositoInvalidoException>(() => conta.Depositar(value));
+            Assert.Throws<ValorDeCreditoInvalidoException>(() => conta.Creditar(value));
         }
 
         [Theory]
@@ -23,7 +23,7 @@ namespace ContaBancaria.API.Tests.Domain.Models
         {
             var conta = new ContaCorrente(initial);
 
-            conta.Depositar(value);
+            conta.Creditar(value);
         
             Assert.Equal(expected, conta.Saldo);
         }
@@ -37,7 +37,7 @@ namespace ContaBancaria.API.Tests.Domain.Models
         {
             var conta = new ContaCorrente(initial);
 
-            Assert.Throws<ValorDeSaqueInvalidoException>(() => conta.Sacar(value));
+            Assert.Throws<ValorDeDebitoInvalidoException>(() => conta.Debitar(value));
         }
 
         [Theory]
@@ -48,7 +48,7 @@ namespace ContaBancaria.API.Tests.Domain.Models
         {
             var conta = new ContaCorrente(initial);
 
-            Assert.Throws<SaldoInsuficienteException>(() => conta.Sacar(value));
+            Assert.Throws<SaldoInsuficienteException>(() => conta.Debitar(value));
         }
     }
 }

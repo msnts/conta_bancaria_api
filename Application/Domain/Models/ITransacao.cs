@@ -2,15 +2,13 @@ using System;
 
 namespace ContaBancaria.API.Domain.Models
 {
-    public enum TipoTransacao { Credito, Debito }
+    public enum TipoTransacao: byte { Credito, Debito }
 
     public interface ITransacao
     {
         long Id { get; }
 
-        IContaCorrente ContaOrigem { get; }
-
-        IContaCorrente ContaDestino { get; }
+        IContaCorrente Conta { get; set;}
 
         TipoTransacao Tipo { get; }
 

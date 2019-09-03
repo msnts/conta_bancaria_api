@@ -6,8 +6,8 @@ namespace ContaBancaria.API.Domain.Models
         
         decimal Saldo { get; }
 
-        void Depositar(decimal value);
-        void Sacar(decimal value);
+        void Creditar(decimal value);
+        void Debitar(decimal value);
         void Transferir(decimal value, IContaCorrente contaDestino);
     }
 }

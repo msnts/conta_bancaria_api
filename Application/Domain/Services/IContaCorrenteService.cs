@@ -8,11 +8,11 @@ namespace ContaBancaria.API.Domain.Services
     {
         Task<IEnumerable<ContaCorrente>> ListAsync();
 
-        Task<ContaCorrente> FindByIdAsync(int id);
+        Task<IContaCorrente> FindByIdAsync(int id);
 
-        Task SaveAsync(ContaCorrente conta);
+        Task SaveAsync(IContaCorrente conta);
 
-        Task UpdateAsync(ContaCorrente conta);
+        Task UpdateAsync(IContaCorrente conta);
 
         Task DeleteAsync(int id);
     }

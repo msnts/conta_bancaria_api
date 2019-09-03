@@ -24,5 +24,7 @@ namespace ContaBancaria.API.Data
         }
 
         public DbSet<ContaCorrente> Contas { get; set; }
+
+        public DbSet<Transacao> Transacoes { get; set; }
     }
 }

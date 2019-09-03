@@ -18,7 +18,7 @@ namespace ContaBancaria.API.Domain.Services
             return await _contaCorrenteRepository.ListAsync();
         }
 
-        public async Task<ContaCorrente> FindByIdAsync(int id)
+        public async Task<IContaCorrente> FindByIdAsync(int id)
         {
             var conta = await _contaCorrenteRepository.FindByIdAsync(id);
 
@@ -28,12 +28,12 @@ namespace ContaBancaria.API.Domain.Services
             return conta;
         }
 
-        public async Task SaveAsync(ContaCorrente conta)
+        public async Task SaveAsync(IContaCorrente conta)
         {
             await _contaCorrenteRepository.SaveAsync(conta);
         }
 
-        public async Task UpdateAsync(ContaCorrente conta)
+        public async Task UpdateAsync(IContaCorrente conta)
         {
             try
             {

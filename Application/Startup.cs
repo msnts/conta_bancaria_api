@@ -35,6 +35,8 @@ namespace ContaBancaria.API
 
             services.AddScoped<IContaCorrenteRepository, ContaCorrenteRepository>();
             services.AddScoped<IContaCorrenteService, ContaCorrenteService>();
+            services.AddScoped<ITransacaoRepository, TransacaoRepository>();
+            services.AddScoped<ITransacaoService, TransacaoService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

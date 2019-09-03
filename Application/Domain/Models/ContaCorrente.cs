@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using ContaBancaria.API.Domain.Exceptions;
 
 namespace ContaBancaria.API.Domain.Models
@@ -7,6 +8,8 @@ namespace ContaBancaria.API.Domain.Models
         public int Id { get; set; }
 
         public decimal Saldo { get; private set; }
+
+        public ICollection<Transacao> Transacoes { get; set; }
 
         private ContaCorrente()
         {
@@ -18,26 +21,26 @@ namespace ContaBancaria.API.Domain.Models
             Saldo = saldo;
         }
 
-        public void Depositar(decimal value)
+        public void Creditar(decimal value)
         {
             if (value < 0.01m)
             {
-                throw new ValorDeDepositoInvalidoException("Valor de depósito inválido");
+                throw new ValorDeCreditoInvalidoException("Valor de crédito inválido");
             }
 
             Saldo += value;
         }
 
-        public void Sacar(decimal value)
+        public void Debitar(decimal value)
         {
             if (value < 0.01m)
             {
-                throw new ValorDeSaqueInvalidoException("Valor do saque inválido");
+                throw new ValorDeDebitoInvalidoException("Valor do débito inválido");
             }
 
             if (value > Saldo)
             {
-                throw new SaldoInsuficienteException("Valor de saldo insuficiente");
+                throw new SaldoInsuficienteException("Valor de débito insuficiente");
             }
 
             Saldo -= value;
@@ -45,8 +48,8 @@ namespace ContaBancaria.API.Domain.Models
 
         public void Transferir(decimal value, IContaCorrente contaDestino)
         {
-            Sacar(value);
-            contaDestino.Depositar(value);
+            Debitar(value);
+            contaDestino.Creditar(value);
         }
     }
 }

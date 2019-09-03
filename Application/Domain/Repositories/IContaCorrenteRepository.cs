@@ -8,15 +8,15 @@ namespace ContaBancaria.API.Domain.Repositories
     {
         Task<IEnumerable<ContaCorrente>> ListAsync();
 
-        Task<ContaCorrente> FindByIdAsync(int id);
+        Task<IContaCorrente> FindByIdAsync(int id);
 
-        Task SaveAsync(ContaCorrente contaCorrente);
+        Task SaveAsync(IContaCorrente contaCorrente);
 
-        Task UpdateAsync(ContaCorrente contaCorrente);
+        Task UpdateAsync(IContaCorrente contaCorrente);
 
-        Task DeleteAsync(ContaCorrente contaCorrente);
+        Task DeleteAsync(IContaCorrente contaCorrente);
 
-        bool ContaCorrenteExists(ContaCorrente contaCorrente);
+        bool ContaCorrenteExists(IContaCorrente contaCorrente);
 
     }
 }

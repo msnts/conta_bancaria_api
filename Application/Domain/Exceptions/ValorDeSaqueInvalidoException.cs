@@ -4,21 +4,21 @@ using System.Runtime.Serialization;
 namespace ContaBancaria.API.Domain.Exceptions
 {
     [Serializable]
-    public class ValorDeSaqueInvalidoException : ArgumentException
+    public class ValorDeDebitoInvalidoException : ArgumentException
     {
-        public ValorDeSaqueInvalidoException()
+        public ValorDeDebitoInvalidoException()
         {
         }
 
-        public ValorDeSaqueInvalidoException(string message) : base(message)
+        public ValorDeDebitoInvalidoException(string message) : base(message)
         {
         }
 
-        public ValorDeSaqueInvalidoException(string message, Exception innerException) : base(message, innerException)
+        public ValorDeDebitoInvalidoException(string message, Exception innerException) : base(message, innerException)
         {
         }
 
-        protected ValorDeSaqueInvalidoException(SerializationInfo info, StreamingContext context) : base(info, context)
+        protected ValorDeDebitoInvalidoException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
     }

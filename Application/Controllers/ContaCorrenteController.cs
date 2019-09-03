@@ -9,19 +9,16 @@ using ContaBancaria.API.Data;
 using ContaBancaria.API.Domain.Models;
 using ContaBancaria.API.Domain.Services;
 
-namespace ContaBancariaAPI.Controllers
+namespace ContaBancaria.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class ContaCorrenteController : ControllerBase
     {
-        private readonly DataContext _context;
-
         private readonly IContaCorrenteService _contaCorrenteService;
 
-        public ContaCorrenteController(DataContext context, IContaCorrenteService service)
+        public ContaCorrenteController(IContaCorrenteService service)
         {
-            _context = context;
             _contaCorrenteService = service;
         }
 
@@ -40,12 +37,12 @@ namespace ContaBancariaAPI.Controllers
         {
             var contaCorrente = await _contaCorrenteService.FindByIdAsync(id);
 
-            return contaCorrente;
+            return (ContaCorrente) contaCorrente;
         }
 
         // PUT: api/ContaCorrente/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutContaCorrente(int id, ContaCorrente contaCorrente)
+        public async Task<IActionResult> PutContaCorrente(int id, IContaCorrente contaCorrente)
         {
             if (id != contaCorrente.Id)
             {
@@ -59,7 +56,7 @@ namespace ContaBancariaAPI.Controllers
 
         // POST: api/ContaCorrente
         [HttpPost]
-        public async Task<ActionResult<ContaCorrente>> PostContaCorrente(ContaCorrente contaCorrente)
+        public async Task<ActionResult<IContaCorrente>> PostContaCorrente(IContaCorrente contaCorrente)
         {
             await _contaCorrenteService.SaveAsync(contaCorrente);
 
