@@ -6,10 +6,11 @@ namespace ContaBancaria.API.Domain.Models
     {
         private const decimal TAXA_DEPOSITO = 0.01m;
         private const string DESCRICAO_TARIFA = "Tarifa de depósito";
+        private const string DESCRICAO_TRANSACAO = "Depósito";
 
         public ITarifa Tarifa { get; private set; }
 
-        public Deposito(IContaCorrente conta, DateTime dataHora, decimal saldoAnterior, decimal valor, decimal saldoFinal) : base(conta, TipoTransacao.Credito, dataHora, saldoAnterior, valor, saldoFinal, "Depósito")
+        public Deposito(IContaCorrente conta, DateTime dataHora, decimal saldoAnterior, decimal valor, decimal saldoFinal) : base(conta, TipoTransacao.Credito, dataHora, saldoAnterior, valor, saldoFinal, DESCRICAO_TRANSACAO)
         {
         }
 

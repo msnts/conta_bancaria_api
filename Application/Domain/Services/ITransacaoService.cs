@@ -8,7 +8,7 @@ namespace ContaBancaria.API.Domain.Services
     {
         Task<IEnumerable<Transacao>> FindAll(int conta);
         Task<IDeposito> DepositarAsync(int contaId, decimal valor);
-        Task SacarAsync(int contaId, decimal valor);
+        Task<ISaque> SacarAsync(int contaId, decimal valor);
         Task TransferirAsync(int contaOrigemId, int contaDestinoId, decimal valor);
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using ContaBancaria.API.Domain.Exceptions;
+using Newtonsoft.Json;
 
 namespace ContaBancaria.API.Domain.Models
 {
@@ -9,6 +10,7 @@ namespace ContaBancaria.API.Domain.Models
 
         public decimal Saldo { get; private set; }
 
+        [JsonIgnore]
         public ICollection<Transacao> Transacoes { get; set; }
 
         private ContaCorrente()

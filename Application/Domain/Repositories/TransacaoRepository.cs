@@ -15,7 +15,7 @@ namespace ContaBancaria.API.Domain.Repositories
 
         public async Task<IEnumerable<Transacao>> FindAllAsync(int conta)
         {
-            return await _context.Transacoes.Where(t => t.ContaCorrenteId == conta).ToListAsync();
+            return await _context.Transacoes.Include(x => x.ContaCorrente).Where(t => t.ContaCorrenteId == conta).ToListAsync();
         }
 
         public async Task SaveAsync(Transacao transacao)

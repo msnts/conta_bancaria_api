@@ -8,6 +8,8 @@ namespace ContaBancaria.API.Domain.Models
     [Table("transacoes")]
     public class Transacao : ITransacao
     {
+        private IContaCorrente _contaCorrente;
+
         [Key]
         [Column("id")]
         public long Id { get; set; }
@@ -15,14 +17,18 @@ namespace ContaBancaria.API.Domain.Models
         [JsonIgnore]
         public int ContaCorrenteId { get; set; }
 
-        //[JsonIgnore]
+        [JsonIgnore] 
         [ForeignKey("ContaCorrenteId")]
-        public IContaCorrente Conta { get; set; }
+        public ContaCorrente ContaCorrente 
+        {
+            get { return (ContaCorrente) this._contaCorrente; }
+            private set {this._contaCorrente = value; }
+        }
 
-        /*[NotMapped]
-         IContaCorrente ITransacao.Conta { 
-            get { return Conta; }
-        }*/
+        [NotMapped]
+        public IContaCorrente Conta { 
+            get { return _contaCorrente; }
+        }
 
         [Required]
         [Column("tipo")]
@@ -55,7 +61,7 @@ namespace ContaBancaria.API.Domain.Models
         public Transacao(IContaCorrente conta, TipoTransacao tipo, DateTime dataHora, decimal saldoAnterior, decimal valor, decimal saldoFinal, string descricao)
         {
             ContaCorrenteId = conta.Id;
-            Conta = conta;
+            _contaCorrente = conta;
             Tipo = tipo;
             DataHora = dataHora;
             SaldoAnterior = saldoAnterior;
@@ -63,7 +69,5 @@ namespace ContaBancaria.API.Domain.Models
             SaldoFinal = saldoFinal;
             Descricao = descricao;
         }
-
-        
     }
 }

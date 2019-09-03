@@ -44,16 +44,16 @@ namespace ContaBancaria.API.Domain.Services
 
             contaCorrente.Creditar(valor);
 
-            var transacaoDeposito = new Deposito(contaCorrente, DateTime.Now, saldoAnterior, valor, contaCorrente.Saldo);
+            var transacao = new Deposito(contaCorrente, DateTime.Now, saldoAnterior, valor, contaCorrente.Saldo);
 
-            transacaoDeposito.CalcularTarifa();
+            transacao.CalcularTarifa();
 
-            await this.transacaoRepository.SaveAsync(transacaoDeposito);
+            await this.transacaoRepository.SaveAsync(transacao);
 
-            return transacaoDeposito;
+            return transacao;
         }
 
-        public async Task SacarAsync(int contaId, decimal valor)
+        public async Task<ISaque> SacarAsync(int contaId, decimal valor)
         {
             var contaCorrente = await DoFindContaAsync(contaId);
 
@@ -61,9 +61,13 @@ namespace ContaBancaria.API.Domain.Services
 
             contaCorrente.Debitar(valor);
 
-            var transacao = new Transacao(contaCorrente, TipoTransacao.Debito, DateTime.Now, saldoAnterior, valor, contaCorrente.Saldo, "Saque");
+            var transacao = new Saque(contaCorrente, DateTime.Now, saldoAnterior, valor, contaCorrente.Saldo);
+
+            transacao.CalcularTarifa();
 
             await this.transacaoRepository.SaveAsync(transacao);
+
+            return transacao;
         }
 
         public async Task TransferirAsync(int contaOrigemId, int contaDestinoId, decimal valor)

@@ -8,7 +8,7 @@ namespace ContaBancaria.API.Domain.Models
     {
         long Id { get; }
 
-        IContaCorrente Conta { get; set;}
+        IContaCorrente Conta { get; }
 
         TipoTransacao Tipo { get; }
 

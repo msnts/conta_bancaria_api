@@ -1,7 +1,7 @@
 using System;
-using ContaBancaria.API.Domain.Models;
 using Moq;
 using Xunit;
+using ContaBancaria.API.Domain.Models;
 
 namespace ContaBancaria.API.Tests.Domain.Models
 {
