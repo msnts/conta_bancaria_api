@@ -19,7 +19,7 @@ namespace ContaBancaria.API.Domain.Services
             this.contaRepository = contaRepository;
         }
 
-        public async Task<IEnumerable<Transacao>> FindAll(int conta)
+        public async Task<IEnumerable<ITransacao>> FindAll(int conta)
         {
             return await this.transacaoRepository.FindAllAsync(conta);
         }
@@ -70,13 +70,29 @@ namespace ContaBancaria.API.Domain.Services
             return transacao;
         }
 
-        public async Task TransferirAsync(int contaOrigemId, int contaDestinoId, decimal valor)
+        public async Task<Tuple<IDebitoTransferencia, ICreditoTransferencia>> TransferirAsync(int contaOrigemId, int contaDestinoId, decimal valor)
         {
             var contaOrigem = await DoFindContaAsync(contaOrigemId);
 
             var contaDestino = await DoFindContaAsync(contaDestinoId);
 
+            var saldoAnterior = contaOrigem.Saldo;
 
+            contaOrigem.Debitar(valor);
+
+            var debito = new DebitoTransferencia(contaOrigem, DateTime.Now, saldoAnterior, valor, contaOrigem.Saldo);
+
+            debito.CalcularTarifa();
+
+            saldoAnterior = contaDestino.Saldo;
+
+            contaDestino.Creditar(valor);
+
+            var credito = new CreditoTransferencia(debito, contaDestino, DateTime.Now, saldoAnterior, valor, contaDestino.Saldo);
+
+            await this.transacaoRepository.SaveAsync(new List<ITransacao> { debito, credito });
+
+            return new Tuple<IDebitoTransferencia, ICreditoTransferencia>(debito, credito);
         }
     }
 }

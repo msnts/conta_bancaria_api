@@ -15,35 +15,35 @@ namespace ContaBancaria.API.Domain.Repositories
 
         public async Task<IEnumerable<ContaCorrente>> ListAsync()
         {
-            return await _context.Contas.ToListAsync();
+            return await this.context.Contas.ToListAsync();
         }
 
         public async Task<IContaCorrente> FindByIdAsync(int id)
         {
-            return await _context.Contas.FindAsync(id);
+            return await this.context.Contas.FindAsync(id);
         }
 
         public async Task SaveAsync(IContaCorrente contaCorrente)
         {
-            _context.Contas.Add((ContaCorrente) contaCorrente);
-            await _context.SaveChangesAsync();
+            this.context.Contas.Add((ContaCorrente) contaCorrente);
+            await this.context.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(IContaCorrente contaCorrente)
         {
-            _context.Entry(contaCorrente).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            this.context.Entry(contaCorrente).State = EntityState.Modified;
+            await this.context.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(IContaCorrente contaCorrente)
         {
-            _context.Contas.Remove((ContaCorrente) contaCorrente);
-            await _context.SaveChangesAsync();
+            this.context.Contas.Remove((ContaCorrente) contaCorrente);
+            await this.context.SaveChangesAsync();
         }
 
         public bool ContaCorrenteExists(IContaCorrente contaCorrente)
         {
-            return _context.Contas.Any(e => e.Id == contaCorrente.Id);
+            return this.context.Contas.Any(e => e.Id == contaCorrente.Id);
         }
     }
 }

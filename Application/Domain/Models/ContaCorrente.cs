@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using ContaBancaria.API.Domain.Exceptions;
 using Newtonsoft.Json;
 
 namespace ContaBancaria.API.Domain.Models
 {
+    [Table("contas")]
     public class ContaCorrente : IContaCorrente
     {
         public int Id { get; set; }
@@ -18,8 +20,9 @@ namespace ContaBancaria.API.Domain.Models
             Saldo = 0m;
         }
 
-        public ContaCorrente(decimal saldo)
+        public ContaCorrente(int id, decimal saldo)
         {
+            Id = id;
             Saldo = saldo;
         }
 

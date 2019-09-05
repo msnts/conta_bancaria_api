@@ -2,7 +2,7 @@ using ContaBancaria.API.Domain.Exceptions;
 using ContaBancaria.API.Domain.Models;
 using Xunit;
 
-namespace ContaBancaria.API.Tests.Domain.Models
+namespace ContaBancaria.API.UnitTests.Domain.Models
 {
     public class ContaCorrenteUnitTest
     {
@@ -11,7 +11,7 @@ namespace ContaBancaria.API.Tests.Domain.Models
         [InlineData(-1)]
         public void TestDepositoInvalido(decimal value)
         {
-            var conta = new ContaCorrente(0);
+            var conta = new ContaCorrente(1, 0);
 
             Assert.Throws<ValorDeCreditoInvalidoException>(() => conta.Creditar(value));
         }
@@ -21,7 +21,7 @@ namespace ContaBancaria.API.Tests.Domain.Models
         [InlineData(3.3, 10.01, 13.31)]
         public void TestDepositoSemErro(decimal value, decimal initial, decimal expected)
         {
-            var conta = new ContaCorrente(initial);
+            var conta = new ContaCorrente(1, initial);
 
             conta.Creditar(value);
         
@@ -35,7 +35,7 @@ namespace ContaBancaria.API.Tests.Domain.Models
         [InlineData(-0.000001, 0)]
         public void TestSaqueValorInvalido(decimal value, decimal initial)
         {
-            var conta = new ContaCorrente(initial);
+            var conta = new ContaCorrente(1, initial);
 
             Assert.Throws<ValorDeDebitoInvalidoException>(() => conta.Debitar(value));
         }
@@ -46,7 +46,7 @@ namespace ContaBancaria.API.Tests.Domain.Models
         [InlineData(9999, 1.87)]
         public void TestSaqueComSaldoInsuficiente(decimal value, decimal initial)
         {
-            var conta = new ContaCorrente(initial);
+            var conta = new ContaCorrente(1, initial);
 
             Assert.Throws<SaldoInsuficienteException>(() => conta.Debitar(value));
         }

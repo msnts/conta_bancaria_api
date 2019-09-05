@@ -3,7 +3,7 @@ using Moq;
 using Xunit;
 using ContaBancaria.API.Domain.Models;
 
-namespace ContaBancaria.API.Tests.Domain.Models
+namespace ContaBancaria.API.UnitTests.Domain.Models
 {
     public class DepositoUnitTest
     {

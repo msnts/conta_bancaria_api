@@ -8,5 +8,6 @@ namespace ContaBancaria.API.Domain.Repositories
     {
         Task<IEnumerable<Transacao>> FindAllAsync(int conta);
         Task SaveAsync(Transacao transacao);
+        Task SaveAsync(IEnumerable<ITransacao> transacoes);
     }
 }

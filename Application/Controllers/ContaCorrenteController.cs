@@ -11,7 +11,7 @@ using ContaBancaria.API.Domain.Services;
 
 namespace ContaBancaria.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/contas")]
     [ApiController]
     public class ContaCorrenteController : ControllerBase
     {
@@ -22,7 +22,7 @@ namespace ContaBancaria.API.Controllers
             _contaCorrenteService = service;
         }
 
-        // GET: api/ContaCorrente
+        // GET: api/contas
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ContaCorrente>>> GetContas()
         {
@@ -31,7 +31,7 @@ namespace ContaBancaria.API.Controllers
             return Ok(result);
         }
 
-        // GET: api/ContaCorrente/5
+        // GET: api/contas/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ContaCorrente>> GetContaCorrente(int id)
         {
@@ -40,9 +40,9 @@ namespace ContaBancaria.API.Controllers
             return (ContaCorrente) contaCorrente;
         }
 
-        // PUT: api/ContaCorrente/5
+        // PUT: api/contas/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutContaCorrente(int id, IContaCorrente contaCorrente)
+        public async Task<ActionResult<IContaCorrente>> PutContaCorrente(int id, ContaCorrente contaCorrente)
         {
             if (id != contaCorrente.Id)
             {
@@ -51,23 +51,25 @@ namespace ContaBancaria.API.Controllers
 
             await _contaCorrenteService.UpdateAsync(contaCorrente);
 
-            return NoContent();
+            return Ok(contaCorrente);
         }
 
-        // POST: api/ContaCorrente
+        // POST: api/contas
         [HttpPost]
-        public async Task<ActionResult<IContaCorrente>> PostContaCorrente(IContaCorrente contaCorrente)
+        public async Task<ActionResult<IContaCorrente>> PostContaCorrente(ContaCorrente contaCorrente)
         {
             await _contaCorrenteService.SaveAsync(contaCorrente);
 
             return CreatedAtAction("GetContaCorrente", new { id = contaCorrente.Id }, contaCorrente);
         }
 
-        // DELETE: api/ContaCorrente/5
+        // DELETE: api/contas/5
         [HttpDelete("{id}")]
-        public async Task DeleteContaCorrente(int id)
+        public async Task<IActionResult> DeleteContaCorrente(int id)
         {
             await _contaCorrenteService.DeleteAsync(id);
+
+            return NoContent();
         }
     }
 }

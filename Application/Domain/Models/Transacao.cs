@@ -12,10 +12,16 @@ namespace ContaBancaria.API.Domain.Models
 
         [Key]
         [Column("id")]
-        public long Id { get; set; }
+        public long Id { get; protected set; }
+
+        [ForeignKey("Parent")]
+        [Column("parent_id")]
+        public long? ParentId { get; protected set; }
+
+        public Transacao Parent { get; protected set; }
 
         [JsonIgnore]
-        public int ContaCorrenteId { get; set; }
+        public int ContaCorrenteId { get; protected set; }
 
         [JsonIgnore] 
         [ForeignKey("ContaCorrenteId")]
@@ -32,27 +38,27 @@ namespace ContaBancaria.API.Domain.Models
 
         [Required]
         [Column("tipo")]
-        public TipoTransacao Tipo { get; set; }
+        public TipoTransacao Tipo { get; protected set; }
 
         [Required]
         [Column("data_hora", TypeName="DATETIME")]
-        public DateTime DataHora { get; set; }
+        public DateTime DataHora { get; protected set; }
 
         [Required]
         [Column("saldo_anterior", TypeName="DECIMAL(18,6)")]
-        public decimal SaldoAnterior { get; set; }
+        public decimal SaldoAnterior { get; protected set; }
 
         [Required]
         [Column("valor", TypeName="DECIMAL(18,6)")]
-        public decimal Valor { get; set; }
+        public decimal Valor { get; protected set; }
 
         [Required]
         [Column("saldo_final", TypeName="DECIMAL(18,6)")]
-        public decimal SaldoFinal { get; set; }
+        public decimal SaldoFinal { get; protected set; }
 
         [Required]
         [Column("descricao", TypeName="VARCHAR(50)")]
-        public string Descricao { get; set; }
+        public string Descricao { get; protected set; }
 
         public Transacao()
         {

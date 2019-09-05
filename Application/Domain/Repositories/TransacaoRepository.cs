@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using ContaBancaria.API.Data;
 using ContaBancaria.API.Domain.Models;
 
@@ -15,14 +15,34 @@ namespace ContaBancaria.API.Domain.Repositories
 
         public async Task<IEnumerable<Transacao>> FindAllAsync(int conta)
         {
-            return await _context.Transacoes.Include(x => x.ContaCorrente).Where(t => t.ContaCorrenteId == conta).ToListAsync();
+            return await this.context.Transacoes.Include(x => x.ContaCorrente).Where(t => t.ContaCorrenteId == conta).ToListAsync();
         }
 
         public async Task SaveAsync(Transacao transacao)
         {
-            _context.Transacoes.Add(transacao);
-            _context.Entry(transacao.Conta).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            DoAddTransacao(transacao);
+
+            await this.context.SaveChangesAsync();
+        }
+
+        private void DoAddTransacao(Transacao transacao)
+        {
+            this.context.Transacoes.Add(transacao);
+
+            if (transacao is ITarifavel)
+            {
+                this.context.Transacoes.Add((Transacao)((ITarifavel)transacao).Tarifa);
+            }
+        }
+
+        public async Task SaveAsync(IEnumerable<ITransacao> transacoes)
+        {
+            foreach (var item in transacoes)
+            {
+                DoAddTransacao((Transacao) item);
+            }
+
+            await this.context.SaveChangesAsync();
         }
     }
 }

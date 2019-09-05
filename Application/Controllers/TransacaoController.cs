@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ContaBancaria.API.Domain.DTOs;
 using ContaBancaria.API.Domain.Models;
 using ContaBancaria.API.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -25,23 +26,29 @@ namespace ContaBancaria.API.Controllers
 
         //POST: api/transacoes/{conta}/depositos
         [HttpPost("depositos")]
-        public async Task PostDeposito(int conta)
+        public async Task<ActionResult<IContaCorrente>> PostDeposito(int conta, DepositoRequestDTO depositoRequest)
         {
-            await this.transacaoService.DepositarAsync(conta, 10);
+            var transacao = await this.transacaoService.DepositarAsync(conta, depositoRequest.Valor);
+
+            return Created($"api/contas/{transacao.Conta.Id}", transacao.Conta);
         }
     
         //POST: api/transacoes/{conta}/saques
         [HttpPost("saques")]
-        public async Task PostSaques(int conta)
+        public async Task<ActionResult<IContaCorrente>> PostSaques(int conta, SaqueRequestDTO saqueRequest)
         {
-            await this.transacaoService.SacarAsync(conta, 100);
+            var transacao = await this.transacaoService.SacarAsync(conta, saqueRequest.Valor);
+
+            return Created($"api/contas/{transacao.Conta.Id}", transacao.Conta);
         }
 
         //POST: api/transacoes/{conta}/transferencias
         [HttpPost("transferencias")]
-        public async Task PostTransferencias(int conta)
+        public async Task<ActionResult<IContaCorrente>> PostTransferencias(int conta, TransferenciaRequestDTO transferenciaRequest)
         {
+            var transacoes = await this.transacaoService.TransferirAsync(conta, transferenciaRequest.ContaDestinoId, transferenciaRequest.Valor);
 
+            return Created($"api/contas/{conta}", transacoes.Item1.Conta);
         }
     }
 }

@@ -11,7 +11,8 @@ namespace conta_bancaria_api.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Saldo = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
                 {

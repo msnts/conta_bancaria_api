@@ -20,7 +20,7 @@ namespace ContaBancaria.API.Domain.Models
 
             this.Conta.Debitar(valorTarifa);
 
-            this.Tarifa = new Tarifa(this.Conta, this.DataHora, this.SaldoFinal, valorTarifa, this.Conta.Saldo, DESCRICAO_TARIFA);
+            this.Tarifa = new Tarifa(this, this.Conta, this.DataHora, this.SaldoFinal, valorTarifa, this.Conta.Saldo, DESCRICAO_TARIFA);
 
             return this.Tarifa;
         }

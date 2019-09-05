@@ -6,7 +6,7 @@ using ContaBancaria.API.Domain.Models;
 using System.Threading.Tasks;
 using ContaBancaria.API.Domain.Exceptions;
 
-namespace ContaBancaria.API.Tests.Domain.Services
+namespace ContaBancaria.API.UnitTests.Domain.Services
 {
     public class TransacaoServiceUnitTest
     {
@@ -15,7 +15,7 @@ namespace ContaBancaria.API.Tests.Domain.Services
         [InlineData(13.31, 11.01, 24.32, 0.11, 24.21)]
         public async Task TestDeveriaDepositarCorretamenteAsync(decimal saldoInicial, decimal valorDeposito, decimal saldoPosDeposito, decimal valorTarifa, decimal saldoPosTarifa)
         {
-            IContaCorrente conta = new ContaCorrente(saldoInicial);
+            IContaCorrente conta = new ContaCorrente(1, saldoInicial);
 
             var transacaoRepositoryMock = new Mock<ITransacaoRepository>();
             var contaRepositoryMock = new Mock<IContaCorrenteRepository>();
@@ -53,7 +53,7 @@ namespace ContaBancaria.API.Tests.Domain.Services
         [InlineData(-1)]
         public void TestDeveriaLancarExcecaoDeValorInvalidoNoDeposito(decimal valor)
         {
-            IContaCorrente conta = new ContaCorrente(0);
+            IContaCorrente conta = new ContaCorrente(1, 0);
 
             var transacaoRepositoryMock = new Mock<ITransacaoRepository>();
             var contaRepositoryMock = new Mock<IContaCorrenteRepository>();
@@ -71,7 +71,7 @@ namespace ContaBancaria.API.Tests.Domain.Services
         [InlineData(71.33, 23.75, 47.58, 4.0, 43.58)]
         public async Task TestDeveriaSacarCorretamente(decimal saldoInicial, decimal valorSaque, decimal saldoPosSaque, decimal valorTarifa, decimal saldoPosTarifa)
         {
-            IContaCorrente conta = new ContaCorrente(saldoInicial);
+            IContaCorrente conta = new ContaCorrente(1, saldoInicial);
 
             var transacaoRepositoryMock = new Mock<ITransacaoRepository>();
             var contaRepositoryMock = new Mock<IContaCorrenteRepository>();
@@ -109,7 +109,7 @@ namespace ContaBancaria.API.Tests.Domain.Services
         [InlineData(-1)]
         public void TestDeveriaLancarExcecaoDeValorInvalidoNoSaque(decimal valor)
         {
-            IContaCorrente conta = new ContaCorrente(0);
+            IContaCorrente conta = new ContaCorrente(1, 0);
 
             var transacaoRepositoryMock = new Mock<ITransacaoRepository>();
             var contaRepositoryMock = new Mock<IContaCorrenteRepository>();
@@ -126,7 +126,7 @@ namespace ContaBancaria.API.Tests.Domain.Services
         [InlineData(10, 8)]
         public void TestDeveriaLancarExcecaoDeSaldoInsuficienteNoSaque(decimal saldoInicial, decimal valorSaque)
         {
-            IContaCorrente conta = new ContaCorrente(saldoInicial);
+            IContaCorrente conta = new ContaCorrente(1, saldoInicial);
 
             var transacaoRepositoryMock = new Mock<ITransacaoRepository>();
             var contaRepositoryMock = new Mock<IContaCorrenteRepository>();
