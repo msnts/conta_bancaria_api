@@ -137,5 +137,27 @@ namespace ContaBancaria.API.UnitTests.Domain.Services
 
             Assert.ThrowsAsync<ValorDeCreditoInvalidoException>(async () => await transacaoService.SacarAsync(1, valorSaque));
         }
+
+        [Theory]
+        [InlineData(10, 100, 89, 0, 10)]
+        [InlineData(123.45, 543.21, 418.76, 451.23, 574.68)]
+        public async void TestDeveriaTransferirCorretamente(decimal valor, decimal saldoInicialContaOrigem, decimal saldoFinalContaOrigem, decimal saldoInicialContaDestino, decimal saldoFinalContaDestino)
+        {
+            IContaCorrente contaOrigem = new ContaCorrente(1, saldoInicialContaOrigem);
+            IContaCorrente contaDestino = new ContaCorrente(2, saldoInicialContaDestino);
+
+            var transacaoRepositoryMock = new Mock<ITransacaoRepository>();
+            var contaRepositoryMock = new Mock<IContaCorrenteRepository>();
+
+            contaRepositoryMock.Setup(x => x.FindByIdAsync(1)).Returns(Task.FromResult(contaOrigem));
+            contaRepositoryMock.Setup(x => x.FindByIdAsync(2)).Returns(Task.FromResult(contaDestino));
+
+            var transacaoService = new TransacaoService(transacaoRepositoryMock.Object, contaRepositoryMock.Object);
+
+            var transacoes = await transacaoService.TransferirAsync(1, 2, valor);
+
+            Assert.Equal(saldoFinalContaOrigem, contaOrigem.Saldo);
+            Assert.Equal(saldoFinalContaDestino, contaDestino.Saldo);
+        }
     }
 }

@@ -8,8 +8,10 @@ namespace ContaBancaria.API.Domain.Models
     [Table("contas")]
     public class ContaCorrente : IContaCorrente
     {
+        [Column("id")]
         public int Id { get; set; }
 
+        [Column("saldo", TypeName="DECIMAL(18,6)")]
         public decimal Saldo { get; private set; }
 
         [JsonIgnore]

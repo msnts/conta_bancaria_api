@@ -37,7 +37,7 @@ namespace ContaBancaria.API.IntegrationTests
 
             Assert.Equal(HttpStatusCode.Created, response.StatusCode);
             
-            Assert.Equal("http://localhost/api/contas/4", response.Headers.Location.OriginalString);
+            Assert.Equal("api/contas/1", response.Headers.Location.OriginalString);
         }
 
         [Fact]
@@ -51,7 +51,7 @@ namespace ContaBancaria.API.IntegrationTests
 
             Assert.Equal(HttpStatusCode.Created, response.StatusCode);
             
-            Assert.Equal("http://localhost/api/contas/4", response.Headers.Location.OriginalString);
+            Assert.Equal("api/contas/1", response.Headers.Location.OriginalString);
         }
 
         [Fact]

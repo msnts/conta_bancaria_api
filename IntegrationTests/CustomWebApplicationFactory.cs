@@ -67,7 +67,7 @@ namespace ContaBancaria.API.IntegrationTests
         private void InitializeDbForTests(DataContext db)
         {
             db.Contas.AddRange(new List<ContaCorrente> {
-                new ContaCorrente(1, 1),
+                new ContaCorrente(1, 100),
                 new ContaCorrente(2, 100),
                 new ContaCorrente(3, 100)
             });

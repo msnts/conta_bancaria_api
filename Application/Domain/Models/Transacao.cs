@@ -8,12 +8,14 @@ namespace ContaBancaria.API.Domain.Models
     [Table("transacoes")]
     public class Transacao : ITransacao
     {
+        [JsonIgnore]
         private IContaCorrente _contaCorrente;
 
         [Key]
         [Column("id")]
-        public long Id { get; protected set; }
+        public long Id { get; set; }
 
+        [JsonIgnore]
         [ForeignKey("Parent")]
         [Column("parent_id")]
         public long? ParentId { get; protected set; }
@@ -21,16 +23,17 @@ namespace ContaBancaria.API.Domain.Models
         public Transacao Parent { get; protected set; }
 
         [JsonIgnore]
+        [ForeignKey("ContaCorrente")]
+        [Column("conta_corrente_id")]
         public int ContaCorrenteId { get; protected set; }
 
-        [JsonIgnore] 
-        [ForeignKey("ContaCorrenteId")]
         public ContaCorrente ContaCorrente 
         {
             get { return (ContaCorrente) this._contaCorrente; }
             private set {this._contaCorrente = value; }
         }
 
+        [JsonIgnore]
         [NotMapped]
         public IContaCorrente Conta { 
             get { return _contaCorrente; }

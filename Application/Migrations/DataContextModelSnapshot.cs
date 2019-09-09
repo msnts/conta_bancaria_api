@@ -19,13 +19,16 @@ namespace conta_bancaria_api.Migrations
             modelBuilder.Entity("ContaBancaria.API.Domain.Models.ContaCorrente", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id");
 
-                    b.Property<decimal>("Saldo");
+                    b.Property<decimal>("Saldo")
+                        .HasColumnName("saldo")
+                        .HasColumnType("DECIMAL(18,6)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Contas");
+                    b.ToTable("contas");
                 });
 
             modelBuilder.Entity("ContaBancaria.API.Domain.Models.Transacao", b =>
@@ -34,7 +37,8 @@ namespace conta_bancaria_api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id");
 
-                    b.Property<int>("ContaCorrenteId");
+                    b.Property<int>("ContaCorrenteId")
+                        .HasColumnName("conta_corrente_id");
 
                     b.Property<DateTime>("DataHora")
                         .HasColumnName("data_hora")
@@ -44,6 +48,9 @@ namespace conta_bancaria_api.Migrations
                         .IsRequired()
                         .HasColumnName("descricao")
                         .HasColumnType("VARCHAR(50)");
+
+                    b.Property<long?>("ParentId")
+                        .HasColumnName("parent_id");
 
                     b.Property<decimal>("SaldoAnterior")
                         .HasColumnName("saldo_anterior")
@@ -62,7 +69,23 @@ namespace conta_bancaria_api.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ContaCorrenteId");
+
+                    b.HasIndex("ParentId");
+
                     b.ToTable("transacoes");
+                });
+
+            modelBuilder.Entity("ContaBancaria.API.Domain.Models.Transacao", b =>
+                {
+                    b.HasOne("ContaBancaria.API.Domain.Models.ContaCorrente", "ContaCorrente")
+                        .WithMany("Transacoes")
+                        .HasForeignKey("ContaCorrenteId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ContaBancaria.API.Domain.Models.Transacao", "Parent")
+                        .WithMany()
+                        .HasForeignKey("ParentId");
                 });
 #pragma warning restore 612, 618
         }
