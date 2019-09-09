@@ -30,6 +30,10 @@ Body:
 
 DELETE https://localhost:5001/api/contas/1
 
+* Listar transações (Extrato)
+
+GET https://localhost:5001/api/contas/1/transacoes
+
 * Executar um deposito
 
 POST https://localhost:5001/api/contas/1/depositos
