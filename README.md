@@ -2,6 +2,9 @@
 API Restful que implementa as regras de negocio de  uma conta bancaria
 
 ## Banco de Dados
+
+A api faz uso do banco Sqlite para desenvolvimento
+
 Execute o comando de execução das migrations
 
 > dotnet ef database update
