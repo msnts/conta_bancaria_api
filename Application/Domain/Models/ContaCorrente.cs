@@ -47,7 +47,7 @@ namespace ContaBancaria.API.Domain.Models
 
             if (value > Saldo)
             {
-                throw new SaldoInsuficienteException("Valor de débito insuficiente");
+                throw new SaldoInsuficienteException("Saldo insuficiente");
             }
 
             Saldo -= value;
